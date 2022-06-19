@@ -20,6 +20,8 @@ import { ContentGrid, MainContentRow, SubContentRow } from '../Content'
 export function SupportDetails() {
   return (
     <ContentGrid>
+      {/* <Logout heading="Logout"></Logout> */}
+
       <MainContentRow heading="Chat with Support">
         <p>
           We are here for you! Our support team is ready to answer your

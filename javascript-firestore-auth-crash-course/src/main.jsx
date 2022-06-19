@@ -19,6 +19,7 @@ import Router from 'preact-router';
 import { Component, render } from 'preact'
 import { Support } from '@/pages/Support'
 import { SignIn, SignUp } from '@/pages/SignIn';
+import { Case } from '@/pages/Case';
 import { onAuth } from './firebase';
 import './reset.css'
 import './variables.css'
@@ -41,8 +42,15 @@ export class App extends Component {
           ...this.state,
           user,
         })
+        /** ROUTE TO CHAT APP PAGE UPON AUTHENTICATION:
+         * In the beginning, we work globally from one case.
+         * Whenever user is logged in, we go directly to chat app.
+         */
+        route('/cases/fCBYR7HTFZJ2DNgk4Uqr', true); 
+        console.log("onAuth has executed with user!=null");
       } else {
         // redirect
+        // route('/signin', true);
       }
     });
   }
@@ -58,6 +66,7 @@ export class App extends Component {
         }} />
         <SignIn path="/signin" />
         <SignUp path="/signup" />
+        <Case path="/case" />
       </Router>
     )
   }

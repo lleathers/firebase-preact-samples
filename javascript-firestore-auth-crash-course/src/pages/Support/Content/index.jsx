@@ -16,6 +16,21 @@
  */
 
 import styles from './Content.module.css'
+// import loggingOut from '../../../pages/SignIn/auth.js'
+// import LogoutButton from '@/components/Buttons'
+
+// export function Logout(props) {
+//   const { heading } = props
+//   return (
+//     <div class={styles.contentRow}>
+//       <h3>{heading}</h3>
+//       <button class="icon" onClick={loggingOut()}>
+//         {heading}
+//       </button>
+//       <LogoutButton onClick={loggingOut()} />
+//     </div>
+//   )
+// }
 
 export function ContentGrid(props) {
   const { children } = props

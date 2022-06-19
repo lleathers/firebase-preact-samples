@@ -47,6 +47,17 @@ export function signIn(user) {
   }
 }
 
+
+// export function loggingOut() {
+//   const auth = getAuth();
+//   signOut(auth).then(() => {
+//     console.log("Logged out successfully!")  
+//   }).catch((error) => {
+//     // an error happened.
+//   });
+//  }
+
+
 // This is the less clean way of writing the initialzieServices function 
 // in src/firebase.js. This code exists behind the scenes so I can log in
 // users for the screencast and only focus on the relevant bits of code.
