@@ -16,7 +16,8 @@
  */
 
 import styles from './Content.module.css'
-// import loggingOut from '../../../pages/SignIn/auth.js'
+import { getAuth, signOut } from 'firebase/auth'
+import { loggingOut } from '../../SignIn/auth'
 // import LogoutButton from '@/components/Buttons'
 
 export function Logout(props) {
@@ -24,12 +25,6 @@ export function Logout(props) {
   return (
     <div class={styles.contentRow}>
       <h3>{heading}</h3>
-      {/* <button class="icon" onClick={() => { 
-        loggingOut()
-        console.log('We are logging out!!!')}}
-        >
-        {heading}
-      </button> */}
       <button class="icon" onClick={() => loggingOut()}>
         {heading}
       </button>

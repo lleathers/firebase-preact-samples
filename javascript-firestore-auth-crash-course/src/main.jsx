@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import Router from 'preact-router';
+import { Router, route } from 'preact-router';
 import { Component, render } from 'preact'
 import { Support } from '@/pages/Support'
 import { SignIn, SignUp } from '@/pages/SignIn';

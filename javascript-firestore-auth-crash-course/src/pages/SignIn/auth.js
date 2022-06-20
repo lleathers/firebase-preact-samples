@@ -1,6 +1,7 @@
+import route from 'preact-router'
 import { initializeApp, getApps, getApp } from 'firebase/app'
 import { getFirestore, connectFirestoreEmulator, enableMultiTabIndexedDbPersistence } from 'firebase/firestore'
-import { getAuth, connectAuthEmulator, signInWithEmailAndPassword, signInWithRedirect, GoogleAuthProvider, TwitterAuthProvider, createUserWithEmailAndPassword } from 'firebase/auth';
+import { getAuth, connectAuthEmulator, signInWithEmailAndPassword, signInWithRedirect, GoogleAuthProvider, TwitterAuthProvider, createUserWithEmailAndPassword, signOut } from 'firebase/auth';
 import { config } from '@/config.js'
 
 export function createAccount(user) {
@@ -48,21 +49,26 @@ export function signIn(user) {
 }
 
 
+// export function loggingOut() {
+//   console.log("We should be logging OUT!!!")
+// }
+
+
 export function loggingOut() {
-  console.log("We should be logging OUT!!!")
-}
 
+  console.log("We should be logging OUTTTT!")
 
-/* export function loggingOut() {
-  const auth = getAuth();
+  const auth = getAuth()
+
   signOut(auth).then(() => {
-    console.log("Logged out successfully!")  
+    console.log("Logged out successfully!")
+    route('/signin', true)      
   }).catch((error) => {
     // an error happened.
     console.log("Some logout error occured.")
   });
  }
- */
+
 
 // This is the less clean way of writing the initialzieServices function 
 // in src/firebase.js. This code exists behind the scenes so I can log in

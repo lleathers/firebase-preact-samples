@@ -15,14 +15,16 @@
  * limitations under the License.
  */
 
+import { Component } from 'preact';
 import { SignInContainer } from './Container';
 import { FirstHalfColumn, SecondHalfColumn } from '@/components/Grid'
 import { ChatBox } from './ChatBox'
 import { SupportDetails } from './Details'
 
-export function Support(props) {
-  return (
-    <SignInContainer>
+export class Support extends Component {
+  render(props, state) {
+    return (
+      <SignInContainer>
       <FirstHalfColumn>
         <SupportDetails />
       </FirstHalfColumn>
@@ -31,6 +33,20 @@ export function Support(props) {
         <ChatBox {...props} />
       </SecondHalfColumn>
     </SignInContainer>
-  )
+    )
+  }
 }
 
+// export function Support(props) {
+//   return (
+//     <SignInContainer>
+//       <FirstHalfColumn>
+//         <SupportDetails />
+//       </FirstHalfColumn>
+
+//       <SecondHalfColumn>
+//         <ChatBox {...props} />
+//       </SecondHalfColumn>
+//     </SignInContainer>
+//   )
+// }
