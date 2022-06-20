@@ -15,12 +15,16 @@
  * limitations under the License.
  */
 
-import { ContentGrid, MainContentRow, SubContentRow } from '../Content'
+import { ContentGrid, MainContentRow, SubContentRow, Logout } from '../Content'
 
 export function SupportDetails() {
   return (
     <ContentGrid>
-      {/* <Logout heading="Logout"></Logout> */}
+      <Logout heading="Logout">
+        <p>
+          Practice logging out!
+        </p>
+      </Logout>
 
       <MainContentRow heading="Chat with Support">
         <p>

@@ -48,15 +48,21 @@ export function signIn(user) {
 }
 
 
-// export function loggingOut() {
-//   const auth = getAuth();
-//   signOut(auth).then(() => {
-//     console.log("Logged out successfully!")  
-//   }).catch((error) => {
-//     // an error happened.
-//   });
-//  }
+export function loggingOut() {
+  console.log("We should be logging OUT!!!")
+}
 
+
+/* export function loggingOut() {
+  const auth = getAuth();
+  signOut(auth).then(() => {
+    console.log("Logged out successfully!")  
+  }).catch((error) => {
+    // an error happened.
+    console.log("Some logout error occured.")
+  });
+ }
+ */
 
 // This is the less clean way of writing the initialzieServices function 
 // in src/firebase.js. This code exists behind the scenes so I can log in
