@@ -36,17 +36,3 @@ export class Support extends Component {
     )
   }
 }
-
-// export function Support(props) {
-//   return (
-//     <SignInContainer>
-//       <FirstHalfColumn>
-//         <SupportDetails />
-//       </FirstHalfColumn>
-
-//       <SecondHalfColumn>
-//         <ChatBox {...props} />
-//       </SecondHalfColumn>
-//     </SignInContainer>
-//   )
-// }

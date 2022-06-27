@@ -9,10 +9,26 @@ export function createAccount(user) {
   const { auth } = initialize();
   switch(type) {
     case 'google': {
+      // manage redirect here with dummy page - vvvv
+      const stateObj = {
+        foo: "bar",
+      }
+    
+      history.pushState(stateObj, "intermediate page", "/case")
+      // manage redirect here with dummy page - ^^^^
+
       signInWithRedirect(auth, new GoogleAuthProvider());
       break;
     }
     case 'twitter': {
+      // manage redirect here with dummy page - vvvv
+      const stateObj = {
+        foo: "bar",
+      }
+    
+      history.pushState(stateObj, "intermediate page", "/case")
+      // manage redirect here with dummy page - ^^^^
+
       signInWithRedirect(auth, new TwitterAuthProvider());
       break;
     }
@@ -31,10 +47,26 @@ export function signIn(user) {
   const { auth } = initialize();
   switch(type) {
     case 'google': {
+      // manage redirect here with dummy page - vvvv
+      const stateObj = {
+        foo: "bar",
+      }
+    
+      history.pushState(stateObj, "intermediate page", "/case")
+      // manage redirect here with dummy page - ^^^^
+
       signInWithRedirect(auth, new GoogleAuthProvider());
       break;
     }
     case 'twitter': {
+      // manage redirect here with dummy page - vvvv
+      const stateObj = {
+        foo: "bar",
+      }
+    
+      history.pushState(stateObj, "intermediate page", "/case")
+      // manage redirect here with dummy page - ^^^^
+      
       signInWithRedirect(auth, new TwitterAuthProvider());
       break;
     }
@@ -49,11 +81,6 @@ export function signIn(user) {
 }
 
 
-// export function loggingOut() {
-//   console.log("We should be logging OUT!!!")
-// }
-
-
 export function loggingOut() {
 
   console.log("We should be logging OUTTTT!")
@@ -61,8 +88,7 @@ export function loggingOut() {
   const auth = getAuth()
 
   signOut(auth).then(() => {
-    console.log("Logged out successfully!")
-    route('/signin', true)      
+    console.log("Logged out successfully!")      
   }).catch((error) => {
     // an error happened.
     console.log("Some logout error occured.")

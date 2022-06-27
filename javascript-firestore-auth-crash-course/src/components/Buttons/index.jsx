@@ -37,6 +37,17 @@ export function GoogleButton(props) {
   )
 }
 
+
+export function SignUpButton(props) {
+  const { text, onClick } = props
+  return (
+    <button class="icon" onClick={onClick}>
+        <span>{text}</span>
+    </button>
+  )
+}
+
+
 export function LogoutButton(props) {
   const { onClick } = props
   return (

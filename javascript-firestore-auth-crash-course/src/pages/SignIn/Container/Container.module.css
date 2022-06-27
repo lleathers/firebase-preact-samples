@@ -14,6 +14,20 @@
  limitations under the License.
  */
 
+ .signInContainerUnseen {
+  visibility: hidden;
+  place-self: center;
+  padding: 0 16px;
+  z-index: 1;
+}
+
+.signInContainerSeen {
+  visibility: visible;
+  place-self: center;
+  padding: 0 16px;
+  z-index: 1;
+}
+
 .signInContainer {
   place-self: center;
   padding: 0 16px;

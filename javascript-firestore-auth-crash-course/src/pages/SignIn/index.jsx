@@ -22,31 +22,41 @@ import { SignInSocial } from './Social'
 import { SignUpForm, SignInForm } from './Form'
 import { Painting } from './Painting'
 import { createAccount, signIn } from './auth';
+import { SignUpButton } from '@/components/Buttons'
 
 export class SignIn extends Component {
   render(props, state) {
+    console.log("at SignIn, isSignIn value is: ", props.isSignIn)
     return (
-      <SplitGrid appendClass="theme-dark">
+        <SplitGrid appendClass="theme-dark">
         
-        <SignInContainer>
-          <Heading>Sign in to your account</Heading>
-          <SignInSocial
-            onClick={(event, type) => {
-              console.log({ type })
-              signIn({ type });
-            }}
-          />
-          <SignInForm onSubmit={(user) => {
-            signIn({ type: 'email', ...user });
-          }} />
-        </SignInContainer>
+          <SignInContainer user={props.user}>
+            <Heading>Sign in to your account</Heading>
+            <SignInSocial
+              onClick={(event, type) => {
+                console.log({ type })
+                signIn({ type });
+              }}
+            />
 
-        <Painting />
-      </SplitGrid>
+            <SignInForm onSubmit={(user) => {
+              signIn({ type: 'email', ...user });
+            }} />
+
+            <SignUpButton onClick={() => {
+              const isSignIn = false
+              this.props.setIsSignIn(isSignIn)
+              }}
+              text = "Sign Up"
+            />
+
+          </SignInContainer>
+
+          <Painting />
+        </SplitGrid>
     )
   }
 }
-
 
 export class SignUp extends Component {
   render(props, state) {
@@ -58,6 +68,8 @@ export class SignUp extends Component {
           <SignInSocial
             onClick={(event, type) => {
               console.log({ type })
+              const isSignIn = true
+              this.props.setIsSignIn(isSignIn)
               createAccount({ type });
             }}
           />

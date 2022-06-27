@@ -18,7 +18,7 @@
 import styles from './Container.module.css'
 
 export function SignInContainer(props) {
-  const { children, header } = props
+  const { user, children, header } = props
   return (
     <div class={styles.signInContainer}>
       <main>
