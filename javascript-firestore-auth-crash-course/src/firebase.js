@@ -25,7 +25,9 @@ import {
   onSnapshot,
   addDoc,
   serverTimestamp,
-  enableMultiTabIndexedDbPersistence
+  enableMultiTabIndexedDbPersistence,
+  doc,
+  getDoc
 } from 'firebase/firestore'
 import { getAuth, connectAuthEmulator, onAuthStateChanged } from 'firebase/auth'
 import { config } from './config'
@@ -53,6 +55,63 @@ export function getFirebase() {
   }
   return services
 }
+
+
+export async function identifyUser (userid) { 
+  const { firestore } = getFirebase()
+
+  // const document = firestore.collection("users").doc(userid).get().then((snapshot) => {
+  //   console.log(snapshot.data())
+  // }).catch((e) => console.log(e))
+
+  // return document
+
+
+  const usersDocRef = doc(firestore, 'users', userid)
+
+  let x = await getDoc(usersDocRef).then( (snapshot) => { 
+
+    const roleFromDb = snapshot.data()
+    console.log("We have got a response: ", roleFromDb)
+    if (roleFromDb == null) {
+      throw "We have a null result or error"
+    }
+
+    try { 
+      return roleFromDb
+      // callback(roleFromDb)
+
+    } catch (e) {
+      console.error(e)
+    }
+    })
+
+  return x
+} 
+
+
+// const usersDocRef = doc(firestore, 'users', userid)
+// const usersDocSnap = getDoc(usersDocRef)
+
+// const x = () => 
+//   await usersDocSnap.then( (response) => { 
+//   const roleFromDb = response.data()
+//   console.log("We have got a response: ", roleFromDb)
+//   if (roleFromDb == null) {
+//     throw "We have a null result or error"
+//   }
+
+//   try { 
+//     return roleFromDb
+//     // callback(roleFromDb)
+
+//   } catch (e) {
+//     console.error(e)
+//   }
+//   })
+
+// return x
+
 
 export function streamMessages({ caseId }) {
   const { firestore } = getFirebase()

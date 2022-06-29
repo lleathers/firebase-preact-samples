@@ -31,6 +31,7 @@ export class App extends Component {
     super()
     this.state = {
       user: null,
+      name: null,
       messages: [],
       isSignIn: true,
       // isSignIn is false means signup page. Folks should explicitly ask to join from signin page.
@@ -38,22 +39,40 @@ export class App extends Component {
     };
   }
 
+      // const displayName = user.displayName;
+      // const email = user.email;
+      // const photoURL = user.photoURL;
+      // const emailVerified = user.emailVerified;
+    
+      // The user's ID, unique to the Firebase project. Do NOT use
+      // this value to authenticate with your backend server, if
+      // you have one. Use User.getToken() instead.
+
+      // const uid = user.uid;
+
   componentDidMount() {
     onAuth(user => {
+
       if(user != null) {
-       
+        // Let's decorate chat with names.  
+        const name = user.displayName
+        console.log("We define username here: ", name)
+
         this.setState({
           ...this.state,
           user,
+          name: user.displayName,
         })
- 
+
+        console.log("INITIALIZE STATE WITH NAME: ", this.state.name)
+
+        
         /** ROUTE TO CHAT APP PAGE UPON AUTHENTICATION:
          * In the beginning, we work globally from one case.
          * Whenever user is logged in, we go directly to chat app.
          */
         route('/cases/fCBYR7HTFZJ2DNgk4Uqr', true); 
         console.log("onAuth has executed with user!=null");
-
       } 
      
       else if (user == null) { 

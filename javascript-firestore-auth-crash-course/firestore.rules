@@ -35,5 +35,10 @@ service cloud.firestore {
       allow read, write: if getCase(caseId).uid == request.auth.uid || isAgent(request);
     }
 
+    match /users/{uid} {
+      // allow read, write: if (getCase(caseId) != null) && (getUser(uid) != null) && (getCase(caseId).uid == request.auth.uid || isAgent(request));
+      allow read, write: if isAgent(request)
+    }
+
   }
 }

@@ -27,7 +27,9 @@ export class ChatBox extends Component {
       const userId = this.props.user.uid;
       messages = messages.map(m => {
         const role = m.uid === userId ? 'self' : 'other';
-        return { ...m, role };
+        const userid = userId
+        console.log("First report of userid from DB: ", userId)
+        return { ...m, role, userid };
       })
       this.props.setMessages(messages)
     })
@@ -35,9 +37,10 @@ export class ChatBox extends Component {
   }
 
   render(props) {
+    console.log("What happens to props.name: ", props.name)
     return (
       <ChatContainer>
-        <ChatList messages={props.messages} />
+        <ChatList messages={props.messages} name={props.name} />
         <ChatInput
           onEnter={(text) => {
             this.addMessage({ text, uid: props.user.uid })

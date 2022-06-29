@@ -20,11 +20,7 @@ import { ContentGrid, MainContentRow, SubContentRow, Logout } from '../Content'
 export function SupportDetails() {
   return (
     <ContentGrid>
-      <Logout heading="Logout">
-        <p>
-          Practice logging out!
-        </p>
-      </Logout>
+      <Logout heading="Logout"></Logout>
 
       <MainContentRow heading="Chat with Support">
         <p>

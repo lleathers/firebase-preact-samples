@@ -48,6 +48,16 @@
   align-self: flex-end;
 }
 
+/* identity decoration for experimentation - Larry Leathers (270622) */
+.identity {
+  max-width: 300px;
+  background: white;
+  border-radius: 5px;
+  padding: 2px 2px;
+  line-height: 1;
+  transition: opacity 300ms cubic-bezier(0.075, 0.82, 0.165, 0.5)
+}
+
 .message {
   max-width: 300px;
   background: white;
