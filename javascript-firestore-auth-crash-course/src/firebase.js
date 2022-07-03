@@ -57,60 +57,56 @@ export function getFirebase() {
 }
 
 
-export async function identifyUser (userid) { 
+
+// This is how identifyUser would work if we wanted
+// to constantly track database document entries as 
+// a stream.  Otherwise do not use getDoc.
+
+// Use getDoc only when you want to recover documents as
+// though it were a stream.
+
+// export async function identifyUser (userid) { 
+//   const { firestore } = getFirebase()
+
+//   const usersDocRef = doc(firestore, 'users', userid)
+
+//   let x = await getDoc(usersDocRef).then( (snapshot) => { 
+
+//     const roleFromDb = snapshot.data()["role"]
+//     console.log("We have got a response: ", roleFromDb)
+//     if (roleFromDb == null) {
+//       throw "We have a null result or error"
+//     }
+
+//     try { 
+//       return roleFromDb
+//       // callback(roleFromDb)
+
+//     } catch (e) {
+//       console.error(e)
+//     }
+//     })
+
+//   return x
+// } 
+
+
+export function isAdmin (userid) { 
   const { firestore } = getFirebase()
 
-  // const document = firestore.collection("users").doc(userid).get().then((snapshot) => {
-  //   console.log(snapshot.data())
-  // }).catch((e) => console.log(e))
+  const usersDocRef = doc(firestore, 'users/roles/admin', userid)
 
-  // return document
+  // const usersCol = collection(firestore, 'users')
+  // const usersQuery = query(usersCol, orderBy)
 
-
-  const usersDocRef = doc(firestore, 'users', userid)
-
-  let x = await getDoc(usersDocRef).then( (snapshot) => { 
-
-    const roleFromDb = snapshot.data()
-    console.log("We have got a response: ", roleFromDb)
-    if (roleFromDb == null) {
-      throw "We have a null result or error"
+  let x = usersDocRef.id
+    if (x == null) {
+      return false
+    } else if (x != null) {
+      return true
     }
+  }
 
-    try { 
-      return roleFromDb
-      // callback(roleFromDb)
-
-    } catch (e) {
-      console.error(e)
-    }
-    })
-
-  return x
-} 
-
-
-// const usersDocRef = doc(firestore, 'users', userid)
-// const usersDocSnap = getDoc(usersDocRef)
-
-// const x = () => 
-//   await usersDocSnap.then( (response) => { 
-//   const roleFromDb = response.data()
-//   console.log("We have got a response: ", roleFromDb)
-//   if (roleFromDb == null) {
-//     throw "We have a null result or error"
-//   }
-
-//   try { 
-//     return roleFromDb
-//     // callback(roleFromDb)
-
-//   } catch (e) {
-//     console.error(e)
-//   }
-//   })
-
-// return x
 
 
 export function streamMessages({ caseId }) {
@@ -129,6 +125,7 @@ export function streamMessages({ caseId }) {
 
     callback(messages);
   });
+  
   
   const addMessage = (message) => addDoc(messagesCol, {
     timestamp: serverTimestamp(),

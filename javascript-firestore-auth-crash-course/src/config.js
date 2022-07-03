@@ -19,13 +19,21 @@ export const config = {
   // Replace with your Firebase config found in the firebase console
   // https://console.firebase.google.com/
   firebase: {
-    apiKey: "AIzaSyDhvLZkz-ZzQJN8hgItXlW3g8kVKLBIuhQ",
-    authDomain: "calmban-dev.firebaseapp.com",
-    databaseURL: "https://calmban-dev.firebaseio.com",
-    projectId: "calmban-dev",
-    storageBucket: "calmban-dev.appspot.com",
-    messagingSenderId: "258011143570",
-    appId: "1:258011143570:web:e24836ce7b620d8e49354b",
-    measurementId: "G-Z5GG03X0HT"
+    // apiKey: "AIzaSyDhvLZkz-ZzQJN8hgItXlW3g8kVKLBIuhQ",
+    // authDomain: "calmban-dev.firebaseapp.com",
+    // databaseURL: "https://calmban-dev.firebaseio.com",
+    // projectId: "calmban-dev",
+    // storageBucket: "calmban-dev.appspot.com",
+    // messagingSenderId: "258011143570",
+    // appId: "1:258011143570:web:e24836ce7b620d8e49354b",
+    // measurementId: "G-Z5GG03X0HT",
+
+    apiKey: "AIzaSyDQIOx_Q1YHsqr_cE3aO6OYmA5OCd5Si90",
+    authDomain: "deliverhealthy-37c25.firebaseapp.com",
+    projectId: "deliverhealthy-37c25",
+    storageBucket: "deliverhealthy-37c25.appspot.com",
+    messagingSenderId: "641486451606",
+    appId: "1:641486451606:web:599692918d219c32e463b7",
+    measurementId: "G-0QKQW5FPDL"
   }
 }

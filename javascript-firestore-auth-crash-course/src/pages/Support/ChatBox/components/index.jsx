@@ -15,9 +15,10 @@
  * limitations under the License.
  */
 
-import { useRef, useEffect } from 'preact/hooks'
+import { useRef, useEffect, useCallback } from 'preact/hooks'
 import styles from '../ChatBox.module.css'
-import { identifyUser } from '../../../../firebase'
+import { isAdmin } from '../../../../firebase'
+import { calculateBackoffMillis } from '@firebase/util'
 
 export function ChatInput(props) {
   const { onEnter } = props
@@ -68,12 +69,13 @@ export function ChatList(props) {
 export function ChatMessage(props) {
   const { message, name } = props
   let { id, text, role, isDelivered, userid } = message
+  
+  // const myanswer = new Object();
+  // myanswer = identifyUser(userid).then((x) => {console.log("THIS IS X: ", x); return x })
 
-  // const { trial } = identifyUser({ userid });
-  // trial(roleFromDb => {
-  // })
+  const myanswer = isAdmin(userid)  
 
-  console.log("What is the specific role from users collection in db?: ", identifyUser(userid))
+  console.log("Is is true that this user is admin?: ", myanswer)
 
   role = role == null ? 'other' : role;
   const capitalizedRole = role.replace(
@@ -87,7 +89,7 @@ export function ChatMessage(props) {
   const identityClass = styles[`identity`];
   return (
     <li id={id} class={parentClass}>
-      <div class={identityClass}>{role != "self" ? identifyUser().role : ""}</div>
+      <div class={identityClass}>{role != "self" ? (myanswer ? "Administrator" : "Customer") : ""}</div>
       <div class={identityClass}>{role == "self" ? "me: " + name : userid }</div>
       <div class={messageClass}>{text}</div>
       {<div class={deliveredClass}>{isDelivered ? "Delivered" : ""}</div>}

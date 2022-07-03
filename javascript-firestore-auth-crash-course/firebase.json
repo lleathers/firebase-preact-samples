@@ -3,6 +3,7 @@
     "rules": "firestore.rules"
   },
   "hosting": {
+    "site": "deliverhealthychat",
     "public": "dist",
     "ignore": [
       "firebase.json",
