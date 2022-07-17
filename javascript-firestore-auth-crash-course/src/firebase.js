@@ -26,11 +26,14 @@ import {
   addDoc,
   serverTimestamp,
   enableMultiTabIndexedDbPersistence,
+  where,
   doc,
-  getDoc
+  getDoc,
+  DocumentReference
 } from 'firebase/firestore'
 import { getAuth, connectAuthEmulator, onAuthStateChanged } from 'firebase/auth'
 import { config } from './config'
+import { async } from '@firebase/util'
 
 function initializeServices() {
   const isConfigured = getApps().length > 0
@@ -57,76 +60,99 @@ export function getFirebase() {
 }
 
 
-
-// This is how identifyUser would work if we wanted
-// to constantly track database document entries as 
-// a stream.  Otherwise do not use getDoc.
-
-// Use getDoc only when you want to recover documents as
-// though it were a stream.
-
-// export async function identifyUser (userid) { 
+// export function isAdmin(checkid) { 
 //   const { firestore } = getFirebase()
-
-//   const usersDocRef = doc(firestore, 'users', userid)
-
-//   let x = await getDoc(usersDocRef).then( (snapshot) => { 
-
-//     const roleFromDb = snapshot.data()["role"]
-//     console.log("We have got a response: ", roleFromDb)
-//     if (roleFromDb == null) {
-//       throw "We have a null result or error"
+//   const usersDocRef =  doc(firestore, 'users/roles/admin', checkid)
+//   const therecord = (callback) => getDoc(usersDocRef).then( docSnap => {
+//     if (docSnap.exists()) {
+//       const thedata = docSnap.data().details
+//       console.log("Document data, details: ", thedata);
+//       callback(thedata)
+//     } else {
+//       const thedata = ""
+//       console.log("No such document! So not an agent");
+//       callback(thedata)
 //     }
-
-//     try { 
-//       return roleFromDb
-//       // callback(roleFromDb)
-
-//     } catch (e) {
-//       console.error(e)
-//     }
-//     })
-
-//   return x
+//   })
+//   return { therecord }
 // } 
 
 
-export function isAdmin (userid) { 
+export function adminArray() {
+  // always consult admin authorizations and generally roles first for latest changes
+  // return hash of "key:values" as "userid:roles" for admins here. First admin roles
+  // are 'agent'
+
   const { firestore } = getFirebase()
+  const adminCol = collection(firestore, 'users/roles/admin')
+  const adminQuery = query(adminCol, where("details", "==", "agent") )
+  const streamArray = (callback) => onSnapshot(adminQuery, snapshot => {
+    var workArray = snapshot.docs.map(doc => {
+      return {
+        id: doc.id, 
+        details: doc.data().details,
+        name: doc.data().name
+      }
+    });
+    callback(workArray)
+  })
 
-  const usersDocRef = doc(firestore, 'users/roles/admin', userid)
-
-  // const usersCol = collection(firestore, 'users')
-  // const usersQuery = query(usersCol, orderBy)
-
-  let x = usersDocRef.id
-    if (x == null) {
-      return false
-    } else if (x != null) {
-      return true
-    }
-  }
-
+return { streamArray }
+}
 
 
 export function streamMessages({ caseId }) {
+
   const { firestore } = getFirebase()
   const messagesCol = collection(firestore, 'supportCases', caseId, 'messages')
   const messageQuery = query(messagesCol, orderBy('timestamp'))
+  
+  var that = new Object
+
   const stream = (callback) => onSnapshot(messageQuery, snapshot => {
-    const messages = snapshot.docs.map(doc => {
-      const isDelivered = !doc.metadata.hasPendingWrites;
-      return {
-        isDelivered,
-        id: doc.id,
-        ...doc.data()
-      };
+    var messages = snapshot.docs.map(doc => {
+
+      streamMessages.x = doc.data()
+
+      console.log("How does streamMessages show up? ", streamMessages )
+      console.log("How does doc.data show up? ", doc.data() )
+      
+      var { streamArray } = adminArray()
+
+      var promiseMe = Promise.resolve( 
+
+        streamArray(workArray => {
+        return {istrulyAdmin : workArray.find( element => element['id'] == streamMessages.x['uid']) ? true : false };
+        }) 
+
+      );
+        
+      const returnResult = (callback) => promiseMe.then( zzz = (isworkAdmin => {
+
+        const isDelivered = !doc.metadata.hasPendingWrites;
+
+        // console.log("Print out that.x before RETURN: ", streamMessages.x)
+        console.log("Print out doc.data() before RETURN: ", doc.data())
+
+        return {
+          ...streamMessages.x,
+          istrulyAdmin: isworkAdmin,
+          isDelivered,
+          id: doc.id,
+          }
+        }), 
+        
+        callback (zzz) );
+        
+      return returnResult
+
+
+
     })
 
     callback(messages);
-  });
-  
-  
+  })
+
   const addMessage = (message) => addDoc(messagesCol, {
     timestamp: serverTimestamp(),
     ...message,
@@ -134,6 +160,7 @@ export function streamMessages({ caseId }) {
 
   return { stream, addMessage };
 }
+
 
 export function onAuth(callback) {
   const { auth } = getFirebase();

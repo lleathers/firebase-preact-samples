@@ -29,7 +29,8 @@ export class ChatBox extends Component {
         const role = m.uid === userId ? 'self' : 'other';
         const userid = userId
         console.log("First report of userid from DB: ", userId)
-        return { ...m, role, userid };
+        const otherid = m.uid
+        return { ...m, role, userid, otherid };
       })
       this.props.setMessages(messages)
     })

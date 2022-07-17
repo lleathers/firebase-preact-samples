@@ -19,26 +19,49 @@ rules_version = '2';
 service cloud.firestore {
   match /databases/{database}/documents {
 
-    function getCase(caseId) {
-      return get(/databases/$(database)/documents/supportCases/$(caseId)).data;
+    function getCase(caseId, request) {
+      // return get(/databases/$(database)/documents/supportCases/$(caseId)).data;
+      return get(/databases/$(database)/documents/supportCases/$(caseId)/participants/$(request)).data;
     }
 
-    function getUser(uid) {
-      return get(/databases/$(database)/documents/users/$(uid)).data;
+    //function getUser(uid) {
+      //return get(/databases/$(database)/documents/users/roles/admin/$(uid)).data;
+    //}
+    
+    function getAdmin(uid) {
+    	return get(/databases/$(database)/documents/users/roles/admin/$(uid)).data;
+    }
+    
+    function getCustomer(uid) {
+    	return get(/databases/$(database)/documents/users/roles/customer/$(uid)).data;
     }
 
-    function isAgent(request) {
-      return getUser(request.auth.uid).role in ['agent'];
-    }
+    //function isAgent(request) {
+      //return getUser(request.auth.uid).details in ['agent'];
+    //}
 
     match /supportCases/{caseId}/messages/{messageId} {
-      allow read, write: if getCase(caseId).uid == request.auth.uid || isAgent(request);
+      // allow read, write: if getCase(caseId).uid == request.auth.uid || isAgent(request);
+      allow read, write: if getCase(caseId, request.auth.uid) != null;      
     }
 
-    match /users/{uid} {
+    //match /supportCases/{caseId}/messages {
+      // allow read, write: if getCase(caseId).uid == request.auth.uid || isAgent(request);
+      //allow read, write: if getCase(caseId, request.auth.uid) != null;      
+    //}
+    
+    match /users/roles/admin/{uid} {
       // allow read, write: if (getCase(caseId) != null) && (getUser(uid) != null) && (getCase(caseId).uid == request.auth.uid || isAgent(request));
-      allow read, write: if isAgent(request)
+      allow read: if (getAdmin(uid) != null) || (getCustomer(uid) != null);
+      		  // make sure you remove write capability for production
     }
+    
+    match /users/roles/customer/{uid} {
+      allow read: if (getAdmin(uid) != null) || (getCustomer(uid) != null);
+            // make sure you remove write capability for production
+
+    }
+    
 
   }
 }

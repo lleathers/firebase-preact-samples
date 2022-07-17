@@ -17,7 +17,6 @@
 
 import { useRef, useEffect, useCallback } from 'preact/hooks'
 import styles from '../ChatBox.module.css'
-import { isAdmin } from '../../../../firebase'
 import { calculateBackoffMillis } from '@firebase/util'
 
 export function ChatInput(props) {
@@ -26,7 +25,9 @@ export function ChatInput(props) {
     <div class={styles.inputContainer}>
       <input
         type="text"
-        placeholder="Type your message here to get started..."
+        // placeholder="Type your message here to get started..."
+        placeholder="Type message -- (prototyping now)..."
+
         onKeyUp={(keyEvent) => {
           if (keyEvent.key === 'Enter') {
             onEnter(keyEvent.target.value)
@@ -68,14 +69,12 @@ export function ChatList(props) {
 
 export function ChatMessage(props) {
   const { message, name } = props
-  let { id, text, role, isDelivered, userid } = message
-  
-  // const myanswer = new Object();
-  // myanswer = identifyUser(userid).then((x) => {console.log("THIS IS X: ", x); return x })
+  let { id, text, role, isDelivered, istrulyAdmin, userid, otherid } = message
 
-  const myanswer = isAdmin(userid)  
-
-  console.log("Is is true that this user is admin?: ", myanswer)
+  // const isSomeAdmin = ( istrulyAdmin == "agent" ? true : false ) 
+  console.log("Is is true that this user is admin?: ", istrulyAdmin)
+  console.log("Who is the user? ", (userid != otherid ? otherid : "me") )
+  // console.log("What are the DETAILS?: ", istrulyAdmin)
 
   role = role == null ? 'other' : role;
   const capitalizedRole = role.replace(
@@ -87,10 +86,11 @@ export function ChatMessage(props) {
   const messageClass = styles[`message${capitalizedRole}${pendingClass}`]
   const deliveredClass = styles[`delivered${capitalizedRole}`];
   const identityClass = styles[`identity`];
+
   return (
     <li id={id} class={parentClass}>
-      <div class={identityClass}>{role != "self" ? (myanswer ? "Administrator" : "Customer") : ""}</div>
-      <div class={identityClass}>{role == "self" ? "me: " + name : userid }</div>
+      <div class={identityClass}>{role != "self" ? (istrulyAdmin ? "Administrator" : "Customer") : ""}</div>
+      <div class={identityClass}>{role == "self" ? "me: " + name : otherid }</div>
       <div class={messageClass}>{text}</div>
       {<div class={deliveredClass}>{isDelivered ? "Delivered" : ""}</div>}
     </li>
