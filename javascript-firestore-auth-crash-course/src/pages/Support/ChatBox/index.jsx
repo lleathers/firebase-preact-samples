@@ -17,7 +17,7 @@
 
 import { Component } from 'preact'
 import { ChatContainer, ChatList, ChatInput } from './components';
-import { streamMessages } from '../../../firebase';
+import { streamMessages, chatAdmin } from '../../../firebase';
 export class ChatBox extends Component {
 
   componentDidMount() {
@@ -27,10 +27,21 @@ export class ChatBox extends Component {
       const userId = this.props.user.uid;
       messages = messages.map(m => {
         const role = m.uid === userId ? 'self' : 'other';
+        const adminIdentity = chatAdmin()
+
+        console.log("WHAT IS THE adminIdentity ", adminIdentity)
+
+        // LOOK FOR ADMIN through "detail" attribute 
+        // in document record.
+        // if (detail) --> you are an admin
+        // if ~(detail) --> you are a contributor
+        // CONTRIBUTORS add value to the community
+        const adminrole = (m.detail != null || adminIdentity.find((element => element == m.uid))) ? 'administrator' : 'contributor';
+
         const userid = userId
         console.log("First report of userid from DB: ", userId)
         const otherid = m.uid
-        return { ...m, role, userid, otherid };
+        return { ...m, role, userid, otherid, adminrole };
       })
       this.props.setMessages(messages)
     })
@@ -51,3 +62,32 @@ export class ChatBox extends Component {
     )
   }
 }
+
+
+// componentDidMount() {
+//   const { caseId } = this.props;
+//   const { stream, addMessage } = streamMessages({ caseId });
+//   stream(messages => {
+//     const userId = this.props.user.uid;
+//     messages = messages.map(m => {
+//       const role = m.uid === userId ? 'self' : 'other';
+//       const adminIdentity = chatAdmin({ caseId })
+
+//       console.log("WHAT IS THE adminIdentity ", adminIdentity)
+
+//       // LOOK FOR ADMIN through "detail" attribute 
+//       // in document record.
+//       // if (detail) --> you are an admin
+//       // if ~(detail) --> you are a contributor
+//       // CONTRIBUTORS add value to the community
+//       const adminrole = (m.detail != null || m.uid === adminIdentity) ? 'administrator' : 'contributor';
+
+//       const userid = userId
+//       console.log("First report of userid from DB: ", userId)
+//       const otherid = m.uid
+//       return { ...m, role, userid, otherid, adminrole };
+//     })
+//     this.props.setMessages(messages)
+//   })
+//   this.addMessage = addMessage;
+// }

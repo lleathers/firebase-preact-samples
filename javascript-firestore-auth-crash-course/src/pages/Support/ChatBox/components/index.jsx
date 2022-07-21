@@ -69,13 +69,11 @@ export function ChatList(props) {
 
 export function ChatMessage(props) {
   const { message, name } = props
-  let { id, text, role, isDelivered, istrulyAdmin, userid, otherid } = message
+  let { id, text, role, isDelivered, adminrole, userid, otherid } = message
 
-  // const isSomeAdmin = ( istrulyAdmin == "agent" ? true : false ) 
-  console.log("Is is true that this user is admin?: ", istrulyAdmin)
+  console.log("Is is true that this user is admin?: ", adminrole)
   console.log("Who is the user? ", (userid != otherid ? otherid : "me") )
-  // console.log("What are the DETAILS?: ", istrulyAdmin)
-
+  
   role = role == null ? 'other' : role;
   const capitalizedRole = role.replace(
     role.charAt(0),
@@ -89,7 +87,7 @@ export function ChatMessage(props) {
 
   return (
     <li id={id} class={parentClass}>
-      <div class={identityClass}>{role != "self" ? (istrulyAdmin ? "Administrator" : "Customer") : ""}</div>
+      <div class={identityClass}>{role != "self" ? adminrole : ""}</div>
       <div class={identityClass}>{role == "self" ? "me: " + name : otherid }</div>
       <div class={messageClass}>{text}</div>
       {<div class={deliveredClass}>{isDelivered ? "Delivered" : ""}</div>}
