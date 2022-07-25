@@ -15,11 +15,13 @@
  * limitations under the License.
  */
 
-import { ContentGrid, MainContentRow, SubContentRow, Logout } from '../Content'
+import { ContentGrid, MainContentRow, SubContentRow, Logout, AppIdentity } from '../Content'
 
 export function SupportDetails() {
   return (
     <ContentGrid>
+      <AppIdentity/>
+      
       <Logout heading="Logout"></Logout>
 
       <MainContentRow heading="Chat with Support">

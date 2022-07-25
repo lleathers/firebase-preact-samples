@@ -18,7 +18,16 @@
 import styles from './Content.module.css'
 import { getAuth, signOut } from 'firebase/auth'
 import { loggingOut } from '../../SignIn/auth'
+import brandlabel from '../../../assets/DHbdge001.png'
 // import LogoutButton from '@/components/Buttons'
+
+export function AppIdentity() {
+  return (
+    <identity class={styles.contentRow}>
+      <img src={brandlabel}></img> 
+    </identity>
+  )
+}
 
 export function Logout(props) {
   const { heading } = props

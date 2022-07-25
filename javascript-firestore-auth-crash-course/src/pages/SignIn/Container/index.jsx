@@ -16,12 +16,16 @@
  */
 
 import styles from './Container.module.css'
+import brandlabel from '../../../assets/DHbdge001.png'
 
 export function SignInContainer(props) {
-  const { user, children, header } = props
+  const { user, children, header} = props
   return (
     <div class={styles.signInContainer}>
       <main>
+        <preheader class={styles.brandingMark}>
+          
+        </preheader>
         <header class={styles.signInHeader}>
           <h4>{header}</h4>
         </header>
@@ -30,6 +34,14 @@ export function SignInContainer(props) {
         </div>
       </main>
     </div>
+  )
+}
+
+export function BrandingMark() {
+  return (
+    <preheader class={styles.brandingMark}>
+      <img src={brandlabel}></img> 
+    </preheader>
   )
 }
 

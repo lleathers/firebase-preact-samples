@@ -43,6 +43,18 @@
   text-align: center;
 }
 
+.brandingMark {
+  display: flex;
+  justify-content: center;
+}
+
+preheader img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  padding: 0px 0px 20px 0px;
+}
+
 @media(max-width: 480px) {
   .signInContainer main {
     max-width: 320px;

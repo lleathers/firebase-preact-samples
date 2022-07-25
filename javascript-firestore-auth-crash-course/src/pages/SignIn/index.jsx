@@ -17,7 +17,7 @@
 
 import { Component } from 'preact'
 import { SplitGrid } from '@/components/Grid'
-import { SignInContainer, Heading } from './Container'
+import { SignInContainer, Heading, BrandingMark } from './Container'
 import { SignInSocial } from './Social'
 import { SignUpForm, SignInForm } from './Form'
 import { Painting } from './Painting'
@@ -31,6 +31,7 @@ export class SignIn extends Component {
         <SplitGrid appendClass="theme-dark">
         
           <SignInContainer user={props.user}>
+            <BrandingMark/>
             <Heading>Sign in to your account</Heading>
             <SignInSocial
               onClick={(event, type) => {
