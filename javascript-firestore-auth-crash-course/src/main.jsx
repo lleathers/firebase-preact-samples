@@ -20,6 +20,7 @@ import { Component, render } from 'preact'
 import { Support } from '@/pages/Support'
 import { SignIn, SignUp } from '@/pages/SignIn';
 import { Case } from '@/pages/Case';
+// import { Onboard } from '@/pages/Onboard';
 import { onAuth } from './firebase';
 import './reset.css'
 import './variables.css'
@@ -114,6 +115,7 @@ export class App extends Component {
           });
         }}/>
         <Case path="/case" />
+        {/* <Onboard path="/hello" /> */}
       </Router>
     )
   }
