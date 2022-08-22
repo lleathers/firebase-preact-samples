@@ -26,7 +26,7 @@ export function createAccount(user) {
         foo: "bar",
       }
     
-      history.pushState(stateObj, "intermediate page", "/case")
+      // history.pushState(stateObj, "intermediate page", "/case")
       // manage redirect here with dummy page - ^^^^
 
       signInWithRedirect(auth, new TwitterAuthProvider());

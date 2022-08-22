@@ -25,10 +25,24 @@ export function SignInSocial(props) {
     <div class={styles.signInSocial}>
       <div class={styles.socialButtons}>
         <GoogleButton onClick={(event) => onClick(event, 'google')} />
-        <TwitterButton onClick={(event) => onClick(event, 'twitter')} />
+        <TwitterButton />
       </div>
 
       <Divider text="or" />
     </div>
   )
 }
+
+/* export function SignInSocial(props) {
+  const { onClick } = props
+  return (
+    <div class={styles.signInSocial}>
+      <div class={styles.socialButtons}>
+        <GoogleButton onClick={(event) => onClick(event, 'google')} />
+        <TwitterButton onClick={(event) => onClick(event, 'twitter')} />
+      </div>
+
+      <Divider text="or" />
+    </div>
+  )
+} */

@@ -20,11 +20,22 @@ export function EmailButton(props) {
   return (
     <SocialButton
       text="Sign in with Email"
-      onClick={onClick}
+      
       svg={() => <EmaiLogo />}
     />
   )
 }
+
+/* export function EmailButton(props) {
+  const { onClick } = props
+  return (
+    <SocialButton
+      text="Sign in with Email"
+      onClick={onClick}
+      svg={() => <EmaiLogo />}
+    />
+  )
+} */
 
 export function GoogleButton(props) {
   const { onClick } = props

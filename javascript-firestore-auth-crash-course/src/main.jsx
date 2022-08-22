@@ -53,6 +53,8 @@ export class App extends Component {
   componentDidMount() {
     onAuth(user => {
 
+      console.log("What are we receiving for user?: ", user)
+
       if(user != null) {
         // Let's decorate chat with names.  
         const name = user.displayName
